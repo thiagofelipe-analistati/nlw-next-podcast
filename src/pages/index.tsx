@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { api } from '../services/api';
 import { convertedDurationToString } from '../util/ConverterDuracao';
+import Link from 'next/link'
 
 // cria o obejto epsodio
 type Episodes = {
@@ -52,7 +53,7 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
                     <div className={styles.episodeDetalhes}> 
                       <a href="">{episode.title}</a>
                       <p>{episode.members}</p>
-                      <span>{episode.publishedAt}</span>
+                      <span >{episode.publishedAt}</span>
                       <span>{episode.durationString} </span>
                     </div>
 
@@ -65,8 +66,47 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
               })}
           </ul>
       </section>
-      <section className={styles.allEpisodes}> 
-      
+  <section className={styles.allEpisodes}> 
+              <h2> Todos os Epsisódios</h2>
+              <table cellSpacing={0}>
+                <thead>
+                  <tr>
+                    <th style={{ width: 72}}></th>
+                    <th>PodCast</th>
+                    <th>Integrantes</th>
+                    <th style={{ width: 100}}>Data</th>
+                    <th>Duarção</th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allEpisodes.map( episode =>{
+                      return( <tr key={episode.id}>
+                      <td>
+                        <Image
+                          width={120}
+                          height={120}
+                          src={episode.thumbnail}
+                          alt={episode.title}
+                          objectFit="cover"
+                        />
+                      </td>
+                      <td>
+                      <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                      </Link></td>
+                      <td>{episode.members}</td>
+                      <td>{episode.publishedAt}</td>
+                      <td>{episode.durationString}</td>
+                      <td>
+                        <button type="button">
+                          <img src="/play-green.svg" alt="Tocar Epsisódio" />
+                        </button>
+                      </td>
+                    </tr>
+                    )})}
+                  </tbody>
+              </table>
       </section>
     </div>
   )
