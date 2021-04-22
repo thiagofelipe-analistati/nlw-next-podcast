@@ -1,9 +1,15 @@
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import {useRouter} from 'next/router'
+import React from 'react';
 import { api } from '../../services/api';
 import { convertedDurationToString } from '../../util/ConverterDuracao';
+
+
+import styles from './episodes.module.scss';
 
 
 type Episode = {
@@ -27,7 +33,40 @@ type EpisodeProps = {
 export default function Episode({episode}:EpisodeProps){
   
     return(
-        <h1> {episode.title} </h1>
+        <div className={styles.episode}> 
+            <div className={styles.thumbnailContainer}>
+                <Link href="/">
+                <button type="button">
+                    <img src="/arrow-left.svg" alt="voltar" />
+                </button>
+                </Link> 
+                
+                
+                    <Image width={700}
+                    height={160}
+                    src={episode.thumbnail}
+                    objectFit="cover"
+                    />
+                
+
+                <button type="button">
+                    <img src="/play.svg" alt="Tocar Próximo Epsódio" />
+                </button>
+            </div> 
+
+            <header>
+                <h1> {episode.title}</h1>
+                <span>{episode.members}</span>
+                <span>{episode.publishedAt}</span>
+                <span>{episode.durationString}</span>
+            </header>
+            <div 
+            className={styles.Description} 
+            dangerouslySetInnerHTML= {{__html:episode.description}} 
+            />
+           
+
+        </div>
         
         )
 }
