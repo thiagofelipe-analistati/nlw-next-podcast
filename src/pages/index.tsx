@@ -1,13 +1,14 @@
 
+import { format, parseISO } from 'date-fns'; 
+import ptBR from 'date-fns/locale/pt-BR'; 
 import { GetStaticProps } from 'next'
-import {format, formatRFC3339, parseISO } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
 
 
 
 import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { api } from '../services/api';
+import { convertedDurationToString } from '../util/ConverterDuracao';
 
 // cria o obejto epsodio
 type Episodes = {
@@ -27,7 +28,7 @@ export default function Home(props: homeProps) {
   return (
     <div> 
      <h1>Index</h1>
-     <p> {JSON.stringify(props.episode)}</p>
+     <p> {JSON.stringify(props.episodes)}</p>
     </div>
   )
 }
@@ -35,13 +36,13 @@ export default function Home(props: homeProps) {
 export const  getStaticProps: GetStaticProps = async () =>  {
   //parametros para definição de quantidade
   const {data}  = await api.get('episodes',{
-      params: { 
+      params: {
         _limit: 12,
         _sort: 'published_at',
         _order: 'desc'
       }
   })
-
+  
   const episodes = data.map( episode => {
     return {
       id: episode.id,
@@ -50,17 +51,17 @@ export const  getStaticProps: GetStaticProps = async () =>  {
       members: episode.members,
       publishedAt: format(parseISO(episode.published_at),'d MMM yy',{locale: ptBR}),
       duration: Number(episode.file.duration),
+      durationString: convertedDurationToString(Number(episode.file.duration )),
       description: episode.description,
       url: episode.file.url,
 
 
     };
   })
-  
 
   return { 
     props: {
-      episodes: data,
+      episodes,
     },
     revalidate: 60*60*8, //conversão para quando vai ser atualizada. só funciona em prdução.
   }
