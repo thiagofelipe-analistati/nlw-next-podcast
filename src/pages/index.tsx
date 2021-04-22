@@ -51,7 +51,9 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
                     objectFit="cover"
                     />
                     <div className={styles.episodeDetalhes}> 
-                      <a href="">{episode.title}</a>
+                    <Link href={`/episodes/${episode.id}`}>
+                      <a>{episode.title}</a>
+                      </Link>
                       <p>{episode.members}</p>
                       <span >{episode.publishedAt}</span>
                       <span>{episode.durationString} </span>
