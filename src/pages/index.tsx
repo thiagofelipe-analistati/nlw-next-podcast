@@ -3,8 +3,8 @@ import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR'; 
 import { GetStaticProps } from 'next'
 
-
-
+import styles from './home.module.scss';
+import Image from 'next/image';
 import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { api } from '../services/api';
@@ -15,20 +15,59 @@ type Episodes = {
   id: string;
   title: string;
   members: string;
-  // ...
+  thumbnail: string;
+  duration: number;
+ 
+  durationString: string;
+  description: string;
+  url: string;
+  publishedAt: string;
 
 }
 //cria a lista de obejtos
 type homeProps = {
-   episode: Episodes[]
+  latesEpisodes: Episodes[]
+  allEpisodes: Episodes[]
 }
-export default function Home(props: homeProps) {
+export default function Home({latesEpisodes, allEpisodes}: homeProps) {
 
 
   return (
-    <div> 
-     <h1>Index</h1>
-     <p> {JSON.stringify(props.episodes)}</p>
+    <div className={styles.homePage}> 
+      <section className={styles.latesEpisodes}> 
+          <h2>Últimos Lançamentos</h2>
+
+          <ul> 
+              {latesEpisodes.map( episode => {
+                return (
+                  //key --> ajuda a identificar os itens da lista
+                  <li key={episode.id}> 
+                    <Image
+                    width = {192}
+                    height ={192}
+                    src={episode.thumbnail} 
+                    alt={episode.title}
+                    objectFit="cover"
+                    />
+                    <div className={styles.episodeDetalhes}> 
+                      <a href="">{episode.title}</a>
+                      <p>{episode.members}</p>
+                      <span>{episode.publishedAt}</span>
+                      <span>{episode.durationString} </span>
+                    </div>
+
+                    <button type="button">
+                      <img src="/play-green.svg" alt="Tocar Epsisódio" />
+                    </button>
+                    
+                  </li>
+                );
+              })}
+          </ul>
+      </section>
+      <section className={styles.allEpisodes}> 
+      
+      </section>
     </div>
   )
 }
@@ -58,10 +97,14 @@ export const  getStaticProps: GetStaticProps = async () =>  {
 
     };
   })
-
+    // retornar os epsodisos que vão ficar em destaque
+    const latesEpisodes =episodes.slice(0,2,);
+    // retornar os epsodisos restantes 
+    const allEpisodes =episodes.slice(2, episodes.length); 
   return { 
     props: {
-      episodes,
+      latesEpisodes,
+      allEpisodes,
     },
     revalidate: 60*60*8, //conversão para quando vai ser atualizada. só funciona em prdução.
   }
