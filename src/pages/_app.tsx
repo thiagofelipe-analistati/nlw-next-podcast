@@ -10,16 +10,21 @@ import { useState } from 'react';
 
 
 function MyApp({ Component, pageProps }) {
-  const [episodeList, SetEpisodeList] = useState([])
-  const [currentEpisodeIndex, SetCurrentEpisodeIndex] = useState(0)
+  const [episodeList, SetEpisodeList] = useState([]);
+  const [currentEpisodeIndex, SetCurrentEpisodeIndex] = useState(0);
+  const [isPlaying, SetIsPlaying] = useState(false);
   
   function play (episode){
     SetEpisodeList([episode]);
     SetCurrentEpisodeIndex(0);
+    SetIsPlaying(true)
+  }
+  function togglePlay (){
+    SetIsPlaying(!isPlaying);
   }
   return (
 
-      <PlayerContext.Provider value={{episodeList, currentEpisodeIndex, play}}>
+      <PlayerContext.Provider value={{episodeList, currentEpisodeIndex, play, isPlaying, togglePlay}}>
       <div className = {styles.Wrapper}>
 
 
