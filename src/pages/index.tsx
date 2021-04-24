@@ -5,11 +5,12 @@ import { GetStaticProps } from 'next'
 
 import styles from './home.module.scss';
 import Image from 'next/image';
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Header } from "../components/Header";
 import { api } from '../services/api';
 import { convertedDurationToString } from '../util/ConverterDuracao';
 import Link from 'next/link'
+import { PlayerContext } from '../Contexts/PlayerContext';
 
 // cria o obejto epsodio
 type Episodes = {
@@ -31,12 +32,12 @@ type homeProps = {
   allEpisodes: Episodes[]
 }
 export default function Home({latesEpisodes, allEpisodes}: homeProps) {
-
+  const player = useContext(PlayerContext);
 
   return (
     <div className={styles.homePage}> 
       <section className={styles.latesEpisodes}> 
-          <h2>Últimos Lançamentos</h2>
+          <h2>Últimos Lançamentos{player}</h2>
 
           <ul> 
               {latesEpisodes.map( episode => {

@@ -4,11 +4,14 @@ import { Header } from '../components/Header';
 import { Player } from '../components/Player';
 
 import styles from '../styles/app.module.scss';
+import { PlayerContext } from '../Contexts/PlayerContext';
 
 
 
 function MyApp({ Component, pageProps }) {
   return (
+
+      <PlayerContext.Provider value={'diego'}>
       <div className = {styles.Wrapper}>
 
 
@@ -19,7 +22,7 @@ function MyApp({ Component, pageProps }) {
       <Player /> 
 
       </div>
-     
+      </PlayerContext.Provider>
       
   )
 }
