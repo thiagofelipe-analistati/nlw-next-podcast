@@ -1,5 +1,19 @@
 import {createContext } from 'react'
 
+type Episode = {
+    title: string;
+    members: string;
+    thumbnail: string;
+    duration: nember;
+    url: string;
 
-export const PlayerContext = createContext('');
+}
+
+type PlayerContextData = {
+    episodeList: Episode[];
+    currentEpisodeIndex: number;
+    play: (episode: Episode) => void;
+};
+
+export const PlayerContext = createContext({} as PlayerContextData);
 
