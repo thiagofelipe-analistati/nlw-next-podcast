@@ -10,7 +10,7 @@ import { Header } from "../components/Header";
 import { api } from '../services/api';
 import { convertedDurationToString } from '../util/ConverterDuracao';
 import Link from 'next/link'
-import { PlayerContext } from '../Contexts/PlayerContext';
+import { PlayerContext, usePlayer } from '../Contexts/PlayerContext';
 
 // cria o obejto epsodio
 type Episodes = {
@@ -32,7 +32,7 @@ type homeProps = {
   allEpisodes: Episodes[]
 }
 export default function Home({latesEpisodes, allEpisodes}: homeProps) {
-  const { playList } = useContext(PlayerContext)
+  const { playList } = usePlayer();
 
   const episodeList = [...latesEpisodes, ...allEpisodes]
 

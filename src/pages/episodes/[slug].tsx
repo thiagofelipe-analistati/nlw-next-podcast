@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {useRouter} from 'next/router'
 import React from 'react';
+import { usePlayer } from '../../Contexts/PlayerContext';
 import { api } from '../../services/api';
 import { convertedDurationToString } from '../../util/ConverterDuracao';
 
@@ -32,7 +33,7 @@ type EpisodeProps = {
 
 // função que vai fazer pegar cada epsódio e virar uma pagina.
 export default function Episode({episode}:EpisodeProps){
-
+    const { play } = usePlayer();
     return(
         <div className={styles.episode}> 
             <div className={styles.thumbnailContainer}>
@@ -50,7 +51,7 @@ export default function Episode({episode}:EpisodeProps){
                     />
                 
 
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                     <img src="/play.svg" alt="Tocar Próximo Epsódio" />
                 </button>
             </div> 

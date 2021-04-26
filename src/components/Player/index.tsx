@@ -1,5 +1,5 @@
-import { useContext, useRef, useEffect} from 'react'
-import { PlayerContext } from '../../Contexts/PlayerContext'
+import { useRef, useEffect} from 'react'
+import { usePlayer } from '../../Contexts/PlayerContext'
 import styles from './styles.module.scss'
 import Image from 'next/image';
 
@@ -19,7 +19,7 @@ export function Player(){
         playPrev,
         hasNext,
         hasPrev,
-    } = useContext(PlayerContext)
+    } = usePlayer();
 
     useEffect (()=> {
         if(!audioRef.current){
