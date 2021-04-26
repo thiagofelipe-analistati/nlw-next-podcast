@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Podcastr" title="Podcastr" src=".github/podcastr.svg" />
+    Aplicação Podcast desenvolvida no evento da Rocktseet NLW 5° Edição.
 </h1>
 
 <p align="center">
