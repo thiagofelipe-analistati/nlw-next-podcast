@@ -32,7 +32,9 @@ type homeProps = {
   allEpisodes: Episodes[]
 }
 export default function Home({latesEpisodes, allEpisodes}: homeProps) {
-  const {play} = useContext(PlayerContext)
+  const { playList } = useContext(PlayerContext)
+
+  const episodeList = [...latesEpisodes, ...allEpisodes]
 
   return (
     <div className={styles.homePage}> 
@@ -40,7 +42,7 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
           <h2>Últimos Lançamentos</h2>
 
           <ul> 
-              {latesEpisodes.map( episode => {
+              {latesEpisodes.map( (episode, index) => {
                 return (
                   //key --> ajuda a identificar os itens da lista
                   <li key={episode.id}> 
@@ -60,7 +62,7 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
                       <span>{episode.durationString} </span>
                     </div>
 
-                    <button type="button" onClick={()=> play(episode)}>
+                    <button type="button" onClick={()=> playList(episodeList, index)}>
                       <img src="/play-green.svg" alt="Tocar Epsisódio" />
                     </button>
                     
@@ -83,7 +85,7 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
                     </tr>
                   </thead>
                   <tbody>
-                    {allEpisodes.map( episode =>{
+                    {allEpisodes.map( (episode, index) =>{
                       return( <tr key={episode.id}>
                       <td>
                         <Image
@@ -102,7 +104,7 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
                       <td>{episode.publishedAt}</td>
                       <td>{episode.durationString}</td>
                       <td>
-                        <button type="button">
+                        <button type="button" onClick={() => playList(episodeList, index + latesEpisodes.length)}>
                           <img src="/play-green.svg" alt="Tocar Epsisódio" />
                         </button>
                       </td>
