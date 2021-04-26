@@ -13,8 +13,12 @@ type PlayerContextData = {
     episodeList: Episode[];
     currentEpisodeIndex: number;
     isPlaying: boolean;  
+    isLooping: boolean;  
     play: (episode: Episode) => void;
     togglePlay: ( ) => void;
+    toggleLoop: ( ) => void;
+    toggleShuflle: ( ) => void;
+    cleanPlayerState: ( ) => void;
     setIsPlayingState: ( state: boolean ) => void;
     playList: (list: Episode[], index: number) => void;
     playNext: () => void;
@@ -33,6 +37,8 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
     const [episodeList, SetEpisodeList] = useState([]);
     const [currentEpisodeIndex, SetCurrentEpisodeIndex] = useState(0);
     const [isPlaying, SetIsPlaying] = useState(false);
+    const [isLooping, SetIsLooping] = useState(false);
+    const [isShuffle, SetIsShuffle] = useState(false);
     
     function play (episode: Episode){ 
       SetEpisodeList([episode]);
@@ -48,18 +54,31 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
     function togglePlay (){
       SetIsPlaying(!isPlaying);
     }
+    function toggleLoop (){
+      SetIsLooping(!isLooping);
+    }
+    function toggleShuflle (){
+      SetIsShuffle(!isShuffle);
+    }
     function setIsPlayingState (state: boolean){
       SetIsPlaying(state);
     }
+    function cleanPlayerState(){
+      SetEpisodeList([]);
+      SetCurrentEpisodeIndex(0);
+  }
 
     const hasPrev = currentEpisodeIndex > 0;
-    const hasNext = (currentEpisodeIndex + 1) < episodeList.length;
+    const hasNext = isShuffle || (currentEpisodeIndex + 1) < episodeList.length;
     function playNext(){
-      const nextEpisodeIndex = currentEpisodeIndex +1;
       
-      if(hasNext){
+      if(isShuffle){
+        const nextRandomEpisodeIndex =Math.floor(Math.random() * episodeList.length);
+        SetCurrentEpisodeIndex(nextRandomEpisodeIndex)
+        } else if(hasNext){
         SetCurrentEpisodeIndex(currentEpisodeIndex + 1 );    
         }
+
       }
 
       function playPrev(){
@@ -76,11 +95,16 @@ export function PlayerContextProvider({children}: PlayerContextProviderProps){
             play, 
             isPlaying, 
             togglePlay, 
+            isLooping,
+            toggleLoop,
+            isShuffle,
+            toggleShuflle,
             setIsPlayingState,
             playList,
             playNext,
             playPrev,
             hasPrev,
+           cleanPlayerState,
             hasNext
             }}>
             {children}
