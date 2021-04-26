@@ -5,12 +5,13 @@ import { GetStaticProps } from 'next'
 
 import styles from './home.module.scss';
 import Image from 'next/image';
-import React, { useContext, useEffect } from "react";
+import Head from 'next/head';
+import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { api } from '../services/api';
 import { convertedDurationToString } from '../util/ConverterDuracao';
 import Link from 'next/link'
-import { PlayerContext, usePlayer } from '../Contexts/PlayerContext';
+import { usePlayer } from '../Contexts/PlayerContext';
 
 // cria o obejto epsodio
 type Episodes = {
@@ -38,6 +39,9 @@ export default function Home({latesEpisodes, allEpisodes}: homeProps) {
 
   return (
     <div className={styles.homePage}> 
+    <Head>
+      <title>Home | podcast</title>
+    </Head>
       <section className={styles.latesEpisodes}> 
           <h2>Últimos Lançamentos</h2>
 
