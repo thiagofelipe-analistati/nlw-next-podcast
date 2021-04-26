@@ -18,7 +18,7 @@
 
 ## 🧪 Tecnologias
 
-This project was developed using the following technologies:
+Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org)
