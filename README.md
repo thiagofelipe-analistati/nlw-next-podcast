@@ -2,7 +2,7 @@
     Aplicação Podcast desenvolvida no evento da Rocktseet NLW 5° Edição.
 </h1>
 <br>
-<p>Este projeto serviu como imerssão nas tecnologias a seguir, objetivo atingido foi se familirizar com as
+<p>Este projeto serviu como imersão nas tecnologias a seguir, objetivo atingido foi se familirizar com as
 componentização do React.js Usando o Framework Next.js e a linguagem base TypeScript.</p>
 
 ## 🧪 Tecnologias
