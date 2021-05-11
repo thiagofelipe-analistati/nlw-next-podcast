@@ -21,16 +21,3 @@ Clone do projeto e acesso da pasta
 $ git https://github.com/thiagofelipe-analistati/nlw-next-podcast.git && cd nlw-next-podcast
 ```
 
-Follow the steps below
-```bash
-# Install the dependencies
-$ yarn
-
-# Run the JSON server
-$ yarn server
-
-# Start the project
-$ yarn dev
-```
-
-
